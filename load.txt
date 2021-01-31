@@ -1,8 +1,5 @@
-python3 -m venv env
-source env/bin/activate
-pip3 install -r requirements.txt
-python3 manage.py makemigrations
-python3 manage.py migrate
+python manage.py makemigrations
+python manage.py migrate
 python manage.py loaddata productcategory.json
 python manage.py loaddata product.json
 python manage.py fill
