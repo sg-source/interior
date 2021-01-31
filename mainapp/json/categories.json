@@ -1,0 +1,22 @@
+[
+    {
+      "name": "home",
+      "descripton": "goods for home"
+    },
+    {
+      "name": "office",
+      "descripton": "goods for office"
+    },
+    {
+      "name": "furniture",
+      "descripton": "goods for furniture"
+    },
+    {
+      "name": "modern",
+      "descripton": "modern goods"
+    },
+    {
+      "name": "classic",
+      "descripton": "classic goods"
+    }
+]

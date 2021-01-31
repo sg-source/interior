@@ -1,0 +1,137 @@
+[
+    {
+        "category": "home",
+        "name": "fishnet chair",
+        "image": "products_images/product-1.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "34.70",
+        "quantity": "17",
+        "is_active": true
+    },
+    {
+        "category": "home",
+        "name": "fishnet chair",
+        "image": "products_images/product-2.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "36.70",
+        "quantity": "0",
+        "is_active": true
+    },
+    {
+        "category": "home",
+        "name": "fishnet chair",
+        "image": "products_images/product-3.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "35.70",
+        "quantity": "7",
+        "is_active": true
+    },
+    {
+        "category": "home",
+        "name": "fishnet chair",
+        "image": "products_images/product-4.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "37.70",
+        "quantity": "0",
+        "is_active": true
+    },
+    {
+        "category": "office",
+        "name": "fishnet chair",
+        "image": "products_images/product-2-sm.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "64.50",
+        "quantity": "4",
+        "is_active": true
+    },
+    {
+        "category": "office",
+        "name": "fishnet chair",
+        "image": "products_images/product-3-sm.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "78.60",
+        "quantity": "15",
+        "is_active": true
+    },
+    {
+        "category": "office",
+        "name": "fishnet chair",
+        "image": "products_images/product-4-sm.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "55.90",
+        "quantity": "11",
+        "is_active": true
+    },
+    {
+        "category": "office",
+        "name": "fishnet chair",
+        "image": "products_images/product-5-sm.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "44.80",
+        "quantity": "21",
+        "is_active": true
+    },
+    {
+        "category": "furniture",
+        "name": "fishnet chair",
+        "image": "products_images/product-5.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "64.15",
+        "quantity": "5",
+        "is_active": true
+    },
+    {
+        "category": "furniture",
+        "name": "fishnet chair",
+        "image": "products_images/product-6.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "53.45",
+        "quantity": "2",
+        "is_active": true
+    },
+    {
+        "category": "furniture",
+        "name": "fishnet chair",
+        "image": "products_images/product-11.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "81.50",
+        "quantity": "8",
+        "is_active": true
+    },
+    {
+        "category": "modern",
+        "name": "fishnet chair",
+        "image": "products_images/product-21.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "45.85",
+        "quantity": "14",
+        "is_active": true
+    },
+    {
+        "category": "modern",
+        "name": "fishnet chair",
+        "image": "products_images/product-31.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "15.80",
+        "quantity": "18",
+        "is_active": true
+    },
+    {
+        "category": "modern",
+        "name": "fishnet chair",
+        "image": "products_images/product-41.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "65.70",
+        "quantity": "16",
+        "is_active": true
+    },
+    {
+        "category": "classic",
+        "name": "fishnet chair",
+        "image": "products_images/slider1.jpg",
+        "description": "lorem ipsum dolor sit amet, consectetur adipisicing elit",
+        "price": "80.99",
+        "quantity": "3",
+        "is_active": true
+    }
+]
