@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            INTERIOR - {{ title }}
+        {% endblock %}
+    </title>
+    {% block css %}
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style-new.css' %}">
+    {% endblock %}
+
+    {% block js %}
+    {% endblock %}
+</head>
+<body>
+  <div class="admin-panel">
+    <div class="admin-header">
+        <h2>Admin Panel</h2>
+    </div>
+    {% block menu %}
+    <div class="admin-menu clearfix">
+                <ul class="admin-menu-list clearfix">
+                    <li class="admin-menu-item">
+                        <a href="{% url 'admin:users' %}" class="admin-menu-link">users</a>
+                    </li>
+                    <li class="admin-menu-item">
+                        <a href="{% url 'admin:categories' %}" class="admin-menu-link">categories</a>
+                    </li>
+                    <li class="admin-menu-item">
+                        <a href="{% url 'main' %}" class="admin-menu-link">view site</a>
+                    </li>
+                </ul>
+    </div>
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>

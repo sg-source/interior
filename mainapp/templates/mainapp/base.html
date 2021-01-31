@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            INTERIOR - {{ title }}
+        {% endblock %}
+    </title>
+    {% block css %}
+
+    <link rel="stylesheet" href="{% static 'style-new.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;700&display=swap" rel="stylesheet">
+    {% endblock %}
+
+    {% block js %}
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/orders_scripts.js' %}"></script>
+    {% endblock %}
+</head>
+
+<body>
+
+        {% block menu %}
+
+        {% endblock %}
+
+        {% block content %}
+
+        {% endblock %}
+
+        {% block footer %}
+
+        {% endblock %}
+
+    <div class="footer">
+            <div class="footer-up">
+                <div class="footer-contact">
+                 <h2>contact us</h2>
+                 <p>132A Bridge Road Richmond VIC Australia.</p>
+                 <p>Talk to us on 1300 132 info@interior.com</p>
+             </div>
+                <div class="footer-information">
+                 <h2>Useful Information</h2>
+                 <ul class="ul-left">
+                     <li>Sales terms</li>
+                     <li>Customer care</li>
+                     <li>Delivery</li>
+                 </ul>
+                 <ul class="ul-right">
+                     <li>Architect accounts</li>
+                     <li>Careers</li>
+                     <li>Exchanges & returns</li>
+                 </ul>
+         </div>
+                <div class="footer-email">
+                 <h2>Let’s Stay in Touch!</h2>
+                 <p>Subscribe to know about our latest news, products and special offers just for subscribers.</p>
+                 <form action="">
+                     <input type="email" placeholder=" user@gmail.com" id="email" name="email"/>
+                 </form>
+             </div>
+             </div>
+             <div class="footer-under">
+                 <p>© Copyright - INTERIOR {% now "Y" %}. All Rights Reserved.</p>
+<!--                 <a href=""><img src="img/social-links.svg" alt=""></a>-->
+                 <!-- icomoon -->
+                 <p>Terms & Conditions / Privacy policy & Cookies</p>
+             </div>
+     </div>
+
+
+</body>
+
+</html>

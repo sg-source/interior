@@ -1,0 +1,200 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+    {% block menu %}
+    <div class="menu-gradient">
+        <div class="container">
+            <div class="header clearfix padding-site">
+                <a href="{% url 'main' %}"><img src="{% static 'img/logo.svg' %}" alt="logo"></a>
+                <ul class="menu clearfix">
+                    <li class="menu-list"><a href="{% url 'main' %}" class="menu-link {% if request.resolver_match.url_name == 'main' %}active-menu{% endif %}">HOME</a></li>
+                    <li class="menu-list"><a href="{% url 'products:index' %}" class="menu-link {% if request.resolver_match.url_name == 'products:index' %}active-menu{% endif %}">PRODUCTS</a>
+                        <ul class="down-submenu">
+                            {% for link in submenu%}
+                            <li><a href="{% url 'products:category' link.pk %}" class="down-submenu-link">{{ link.name}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="menu-list">
+                        {% if user.is_authenticated %}
+                        <a href="" class="menu-link down">{{ user.first_name|default:'User' }}</a>
+                        <ul class="down-submenu">
+                            <img class="avatar" src="/media/{{ object.avatar|default:'users_avatars/default.png' }}" alt="{{ object.username }}">
+                            <li><a href="{% url 'auth:edit' %}" class="down-submenu-link">account</a></li>
+                            <li><a href="{% url 'ordersapp:orders_list' %}" class="down-submenu-link">my orders</a></li><hr class="hr">
+                            <li><a href="{% url 'auth:logout' %}" class="down-submenu-link">logout</a></li>
+                        </ul>
+                        {% else %}
+                        <a href="{% url 'auth:login' %}" class="menu-link search"><img src="{% static 'img/login.svg' %}" alt="search"></a>
+                        {% endif %}
+                    </li>
+                    {% if user.is_superuser %}
+                        <li class="menu-list">
+                          <a href="{% url 'admin:users' %}" class="menu-link">admin tools</a>
+                        </li>
+                    {% endif %}
+                    <li class="menu-list basket-link">
+                        <a href="{% url 'basket:view' %}" class="menu-link search basket"><img src="{% static 'img/shop_cart.svg' %}" alt="search">
+                            <span class="basket-value">
+                                {% if basket %}
+                                    {{ basket.0.total_cost }}$({{ basket.0.total_quantity }})
+                                {% endif %}
+                            </span>
+                        </a>
+                        {% if user.is_authenticated %}
+                        <ul class="down-submenu">
+                            {% if basket %}
+                                {% for item in basket %}
+                                    <div class="mini-basket">
+                                        <ul class="mini-basket-list">
+                                            <li>
+                                                <a href="#"><img class="mini-basket-img" src="/media/{{ item.product.image }}" alt=""></a>
+                                                <span class="mini-basket-descr">
+                                                    <h3>{{ item.product.name }}</h3>
+                                                    <p>price-per-unit: {{ item.product.price }} $</p>
+<!--                                                    <input type="number" name="{{ item.pk }}" min="0" value="{{ item.quantity }}">-->
+                                                    <p>count: {{ item.quantity }}</p>
+
+                                                </span>
+                                                <a class="delete-cart" href="{% url 'basket:remove' item.pk %}"><img src="{% static 'img/delete-cart.svg' %}" alt=""></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <div class="empty-basket">
+                                    <img src="{% static 'img/shopping-cart.svg' %}" alt="">
+                                    <span>Your shopping cart<br> is empty.<br></span>
+                                    <a href="{% url 'products:index' %}">Add product</a>
+                                </div>
+                            {% endif %}
+                        </ul>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+            <div class="tabs">
+                <div class="tab">
+                    <input type="radio" id="tab1" name="tab-group" checked>
+                    <label for="tab1" class="tab-title">Featured</label>
+                    <section class="tab-content">
+                        <div class="tabs-goods">
+                            <ul class="related-products">
+                                {% for item in products %}
+                                <li><span class="descr"><h4>{{ item.name }}</h4><a href="" class="btn-buy" target="_blank"><img src="{% static 'img/arrow.svg' %}" alt=""></a><p>{{ item.description }}</p></span>
+                                    <a href=""><img class="featured-products" src="/media/{{ item.image }}" alt=""></a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+                <div class="tab">
+                    <input type="radio" id="tab2" name="tab-group">
+                    <label for="tab2" class="tab-title">New</label>
+                    <section class="tab-content">
+                        <div class="tabs-goods">
+                            <ul class="related-products">
+                                {% for item in products %}
+                                <li><span class="descr"><h4>{{ item.name }}</h4><a href="" class="btn-buy" target="_blank"><img src="{% static 'img/arrow.svg' %}" alt=""></a><p>{{ item.description }}</p></span>
+                                    <a href=""><img class="featured-products" src="/media/{{ item.image }}" alt=""></a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+                <div class="tab">
+                    <input type="radio" id="tab3" name="tab-group">
+                    <label for="tab3" class="tab-title"><a href="{% url 'products:index' %}">explore all<img src="{% static 'img/explore_all.svg' %}" alt=""></a></label>
+                    <section class="tab-content">Три</section>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    {% block content %}
+    <div class="promo">
+        <div class="promo-1">
+            <div class="promo-descr">
+                <h4>exclusive</h4>
+                <h1>Fishnet Chair</h1>
+                <p>Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated black or highly polished chrome.</p> <a href="" class="btn-buy" target="_blank">order us<span class="white-arrow"><img src="{% static 'img/arrow-little.svg' %}" alt=""></span></a> </div> <img src="{% static 'img/promo-img1.jpg' %}" alt=""> </div>
+        <div class="promo-2">
+            <div class="promo-descr">
+                <h4>exclusive</h4>
+                <h1>Fishnet Chair</h1>
+                <p>Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated black or highly polished chrome.</p> <a href="" class="btn-buy" target="_blank">order us<span class="white-arrow"><img src="{% static 'img/arrow-little.svg' %}" alt=""></span></a> </div> <img src="{% static 'img/promo-img2.jpg' %}" alt=""> </div>
+    </div>
+    <div class="lower-titte clearfix">
+        <div class="lower-tittle1 clearfix">
+            <h1>Trending Products</h1> <a href="{% url 'products:index' %}">explore all<img src="{% static 'img/explore_all.svg' %}" alt=""></a> </div>
+        <div class="tranding-products1">
+            <ul class="related-products">
+                <li><span class="descr">Fishnet Chair<a href="" class="btn-buy" target="_blank">order us</a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore doloremque, corporis obcaecati enim nihil quae itaque ipsa doloribus perspiciatis! Sapiente!</p></span>
+                    <a href=""><img class="related-products1" src="{% static 'img/product-11.jpg' %}" alt=""></a>
+                </li>
+                <li><span class="descr">Fishnet Chair<a href="" class="btn-buy" target="_blank">order us</a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore doloremque, corporis obcaecati enim nihil quae itaque ipsa doloribus perspiciatis! Sapiente!</p></span>
+                    <a href=""><img class="related-products2" src="{% static 'img/product-21.jpg' %}" alt=""></a>
+                </li>
+                <li><span class="descr">Fishnet Chair<a href="" class="btn-buy" target="_blank">order us</a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore doloremque, corporis obcaecati enim nihil quae itaque ipsa doloribus perspiciatis! Sapiente!</p></span>
+                    <a href=""><img class="related-products3" src="{% static 'img/product-31.jpg' %}" alt=""></a>
+                </li>
+            </ul>
+        </div>
+        <div class="tranding-products2">
+            <ul class="related-products">
+                <li><span class="descr">Fishnet Chair<a href="" class="btn-buy" target="_blank">order us</a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore doloremque, corporis obcaecati enim nihil quae itaque ipsa doloribus perspiciatis! Sapiente!</p></span>
+                    <a href=""><img class="related-products1" src="{% static 'img/product-41.jpg' %}" alt=""></a>
+                </li>
+                <li><span class="descr">Fishnet Chair<a href="" class="btn-buy" target="_blank">order us</a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore doloremque, corporis obcaecati enim nihil quae itaque ipsa doloribus perspiciatis! Sapiente!</p></span>
+                    <a href=""><img class="related-products2" src="{% static 'img/product-5.jpg' %}" alt=""></a>
+                </li>
+                <li><span class="descr">Fishnet Chair<a href="" class="btn-buy" target="_blank">order us</a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore doloremque, corporis obcaecati enim nihil quae itaque ipsa doloribus perspiciatis! Sapiente!</p></span>
+                    <a href=""><img class="related-products3" src="{% static 'img/product-6.jpg' %}" alt=""></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="promo-all-width">
+        <div class="promo-descr">
+            <h4>hot deal</h4>
+            <h1>Fishnet Chair</h1>
+            <p>Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated black or highly polished chrome.</p> <a href="" class="btn-buy" target="_blank">order us<span class="white-arrow"><img src="{% static 'img/arrow-little.svg' %}" alt=""></span></a> </div> <img src="{% static 'img/promo-img.jpg' %}" alt="" height="500"> </div>
+    <div class="promo-goods">
+        <div class="promo-goods1">
+            <div class="promo-descr">
+                <h4>exclusive</h4>
+                <h1>Fishnet Chair</h1>
+                <p>Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated black or highly polished chrome.</p> <a href="" class="btn-buy" target="_blank">order us<span class="white-arrow"><img src="{% static 'img/arrow-little.svg' %}" alt=""></span></a> </div> <img src="{% static 'img/product-1-lg.jpg' %}" alt=""> </div>
+        <div class="promo-goods2">
+            <ul class="related-products">
+                <li> <span class="descr"><h4>Fishnet Chair</h4><a href="" class="btn-buy" target="_blank"><img src="{% static 'img/arrow.svg' %}" alt=""></a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p></span>
+                    <a href=""><img src="{% static 'img/product-2-sm.jpg' %}" alt=""></a>
+                </li>
+                <li> <span class="descr"><h4>Fishnet Chair</h4><a href="" class="btn-buy" target="_blank"><img src="{% static 'img/arrow.svg' %}" alt=""></a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p></span>
+                    <a href=""><img src="{% static 'img/product-3-sm.jpg' %}" alt=""></a>
+                </li>
+            </ul>
+            <ul class="related-products">
+                <li> <span class="descr"><h4>Fishnet Chair</h4><a href="" class="btn-buy" target="_blank"><img src="{% static 'img/arrow.svg' %}" alt=""></a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p></span>
+                    <a href=""><img src="{% static 'img/product-4-sm.jpg' %}" alt=""></a>
+                </li>
+                <li> <span class="descr"><h4>Fishnet Chair</h4><a href="" class="btn-buy" target="_blank"><img src="{% static 'img/arrow.svg' %}" alt=""></a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p></span>
+                    <a href=""><img src="{% static 'img/product-5-sm.jpg' %}" alt=""></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="promo-all-width2">
+        <div class="promo-descr">
+            <h4>mobile app</h4>
+            <h1>Find. Follow. Favorite.</h1>
+            <p>Save your favorites and share your style.</p>
+            <div class="app-google">
+            <a href="" target="_blank"><img src="{% static 'img/app-store.jpg' %}" alt=""></a>
+            <a href="" target="_blank"><img src="{% static 'img/google-play.jpg' %}" alt=""></a>
+            </div>
+             </div> <img src="{% static 'img/promo-img3.jpg' %}" alt="" height="500"> </div>
+    {% endblock %}
+
+

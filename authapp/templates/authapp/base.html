@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>
+        {% block title %}
+            {{ title|title }}
+        {% endblock %}
+    </title>
+    {% block css %}
+<!--        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">-->
+<!--        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">-->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'style-new.css' %}">
+    {% endblock %}
+    {% block js %}
+
+    {% endblock %}
+</head>
+<body style="background-color: #f7f7f7;">
+        <div class="authapp-container">
+        <a href="{% url 'main' %}" class="login-logo"><img src="{% static 'img/logo.svg' %}" alt="logo"></a>
+            {% block content %}
+            {% endblock %}
+        </div>
+</body>
+</html>

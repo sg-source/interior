@@ -1,0 +1,16 @@
+{% load static %}
+<ul class="cart-items">
+    {% for item in basket_items %}
+    <li>
+        <a href="#"><img class="cart-item-img" src="/media/{{ item.product.image }}" alt=""></a>
+        <span class="cart-item-descr">
+            <h3>{{ item.product.name }}</h3>
+            <p>price-per-unit: {{ item.product.price }} $</p>
+            <div class="basket-items-count">
+                <p>count:</p><input type="number" name="{{ item.pk }}" min="0" value="{{ item.quantity }}">
+            </div>
+            <a href="{% url 'basket:remove' item.pk %}"><img src="{% static 'img/delete-cart.svg' %}" alt="search"></a>
+        </span>
+    </li>
+    {% endfor %}
+</ul>

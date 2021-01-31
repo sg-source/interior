@@ -1,0 +1,129 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+
+{% block menu %}
+    <div class="header clearfix padding-site">
+        <a href="{% url 'main' %}"><img src="{% static 'img/logo.svg' %}" alt="logo"></a>
+        <ul class="menu clearfix">
+            <li class="menu-list"><a href="{% url 'main' %}" class="menu-link {% if request.resolver_match.url_name == 'main' %}active-menu{% endif %}">HOME</a></li>
+            <li class="menu-list"><a href="{% url 'products:index' %}" class="menu-link {% if request.resolver_match.url_name == 'index' %}active-menu{% endif %}">PRODUCTS</a>
+                <ul class="down-submenu">
+                    {% for link in submenu%}
+                    <li><a href="{% url 'products:category' link.pk %}" class="down-submenu-link">{{ link.name}}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="menu-list">
+                {% if user.is_authenticated %}
+                <a href="" class="menu-link down">{{ user.first_name|default:'User' }}</a>
+                <ul class="down-submenu">
+                    <img class="avatar" src="/media/{{ object.avatar|default:'users_avatars/default.png' }}" alt="{{ object.username }}">
+                    <li><a href="{% url 'auth:edit' %}" class="down-submenu-link">account</a></li>
+                    <li><a href="{% url 'ordersapp:orders_list' %}" class="down-submenu-link">my orders</a></li><hr class="hr">
+                    <li><a href="{% url 'auth:logout' %}" class="down-submenu-link">logout</a></li>
+                </ul>
+                {% else %}
+                <a href="{% url 'auth:login' %}" class="menu-link search"><img src="{% static 'img/login.svg' %}" alt="search"></a>
+                {% endif %}
+            </li>
+            {% if user.is_superuser %}
+                <li class="menu-list">
+                  <a href="{% url 'admin:users' %}" class="menu-link">admin tools</a>
+                </li>
+            {% endif %}
+            <li class="menu-list basket-link">
+                <a href="{% url 'basket:view' %}" class="menu-link search basket"><img src="{% static 'img/shop_cart.svg' %}" alt="search">
+                    <span class="basket-value">
+                        {% if basket %}
+                            {{ basket.0.total_cost }}$({{ basket.0.total_quantity }})
+                        {% endif %}
+                    </span>
+                </a>
+                {% if user.is_authenticated %}
+                <ul class="down-submenu">
+                    {% if basket %}
+                        {% for item in basket %}
+                            <div class="mini-basket">
+                                <ul class="mini-basket-list">
+                                    <li>
+                                        <a href="#"><img class="mini-basket-img" src="/media/{{ item.product.image }}" alt=""></a>
+                                        <span class="mini-basket-descr">
+                                            <h3>{{ item.product.name }}</h3>
+                                            <p>price-per-unit: {{ item.product.price }} $</p>
+<!--                                                    <input type="number" name="{{ item.pk }}" min="0" value="{{ item.quantity }}">-->
+                                            <p>count: {{ item.quantity }}</p>
+
+                                        </span>
+                                        <a class="delete-cart" href="{% url 'basket:remove' item.pk %}"><img src="{% static 'img/delete-cart.svg' %}" alt=""></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty-basket">
+                            <img src="{% static 'img/shopping-cart.svg' %}" alt="">
+                            <span>Your shopping cart<br> is empty.<br></span>
+                            <a href="{% url 'products:index' %}">Add product</a>
+                        </div>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+    <div class="submenu-header">
+      {% include 'mainapp/Include/inc_submenu.html' %}
+    </div>
+
+    <div class="products-list">
+      <div class="lower-title1">
+        <h1>
+          Category: {{ category.name|title }}
+        </h1>
+        <div class="paginator">
+          {% if products_list.has_previous %}
+            <a href="{% url 'products:page' category.pk products_list.previous_page_number %}">
+              <
+            </a>
+          {% endif %}
+          <span class="current">
+            страница {{ products_list.number }} из
+            {{ products_list.paginator.num_pages }}
+          </span>
+          {% if products_list.has_next %}
+            <a href="{% url 'products:page' category.pk products_list.next_page_number %}">
+              >
+            </a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="category-products clearfix">
+
+        <ul class="category-items">
+            {% for product in products_list %}
+            <li>
+                <a href="{% url 'products:product-details' product.pk %}"><img class="product-img" src="/media/{{ product.image }}" alt=""></a>
+                <span class="item-descr">
+                    <h3>{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <a href="{% if user.is_authenticated %}{% url 'basket:add' product.pk %}{%else%}{% url 'auth:login' %}{% endif %}"><img src="{% static 'img/add_shop.svg' %}" alt="search"></a>
+                    <h5>$<span style="font-size: 18px;"> {{ product.price }}</span>/sq</h5>
+                    {% if product.quantity == 0  %}
+                        <h6>Unavailable</h6>
+                    {% else %}
+                        <h6>Available</h6>
+                    {% endif %}
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+  <div class="clr"></div>
+
+{% endblock %}

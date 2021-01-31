@@ -1,0 +1,20 @@
+
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="edit">
+        <form class="form-edit" action="{% url 'auth:edit' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ edit_form.as_ul }}
+            {{ profile_form.as_ul }}
+            <input class="login-btn" type="submit" value="save">
+        </form>
+
+            <a href="{% url 'main' %}" class="home">
+                <h4>home</h4>
+            </a>
+
+    </div>
+{% endblock %}

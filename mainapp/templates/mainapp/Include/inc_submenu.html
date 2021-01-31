@@ -1,0 +1,14 @@
+<ul class="submenu">
+         <li class="submenu-list">
+             <a href="{% url 'products:category' 0 %}" class="submenu-link {% if request.resolver_match.kwargs.pk == 0 %}active-submenu{% endif %}">
+                 all
+             </a>
+         </li>
+         {% for link in submenu %}
+         <li class="submenu-list">
+             <a href="{% url 'products:category' link.pk %}" class="submenu-link {% if request.resolver_match.kwargs.pk|add:'0' == link.pk %}active-submenu{% endif %}">
+                 {{ link.name }}
+             </a>
+         </li>
+         {% endfor %}
+</ul>

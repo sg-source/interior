@@ -1,0 +1,35 @@
+
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="login">
+        <div class="welcome">
+            <h4>welcome</h4>
+        </div>
+        <form class="form-login" action="{% url 'auth:login' %}" method="post">
+            {% csrf_token %}
+            {{ login_form.as_ul }}
+            <br>
+            <input class="login-btn" type="submit" value="login">
+        </form>
+        <div class="sign-up">
+            <span>Don’t have an account?</span>
+            <a href="{% url 'auth:register' %}" class="sign-up">sign up</a>
+        </div>
+<!--        <button class="btn btn-round form-control">-->
+        <div class="auth-social">
+            <span>Login with:</span><br>
+            <div class="auth-social-links">
+                <a class="auth-social-link" href="{% url 'social:begin' 'vk-oauth2' %}?next=/">
+                    <img class="auth-social-img" src="{% static 'img/VK.png' %}" alt="vk">
+                </a>
+                <a class="auth-social-link" href="{% url 'social:begin' 'github' %}?next=/">
+                    <img class="auth-social-img" src="{% static 'img/github.svg' %}" alt="github">
+                </a>
+            </div>
+        </div>
+<!--        </button>-->
+    <div>
+{% endblock %}

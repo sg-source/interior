@@ -1,0 +1,106 @@
+{% extends 'mainapp/base.html' %}
+{% load static %}
+    {% block menu %}
+    <div class="header clearfix padding-site">
+        <a href="{% url 'main' %}"><img src="{% static 'img/logo.svg' %}" alt="logo"></a>
+        <ul class="menu clearfix">
+            <li class="menu-list"><a href="{% url 'main' %}" class="menu-link {% if request.resolver_match.url_name == 'main' %}active-menu{% endif %}">HOME</a></li>
+            <li class="menu-list"><a href="{% url 'products:index' %}" class="menu-link {% if request.resolver_match.url_name == 'products:index' %}active-menu{% endif %}">PRODUCTS</a>
+                <ul class="down-submenu">
+                    {% for link in submenu%}
+                    <li><a href="{% url 'products:category' link.pk %}" class="down-submenu-link">{{ link.name}}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="menu-list">
+                {% if user.is_authenticated %}
+                <a href="" class="menu-link down">{{ user.first_name|default:'User' }}</a>
+                <ul class="down-submenu">
+                    <img class="avatar" src="/media/{{ object.avatar|default:'users_avatars/default.png' }}" alt="{{ object.username }}">
+                    <li><a href="{% url 'auth:edit' %}" class="down-submenu-link">account</a></li>
+                    <li><a href="{% url 'ordersapp:orders_list' %}" class="down-submenu-link">my orders</a></li><hr class="hr">
+                    <li><a href="{% url 'auth:logout' %}" class="down-submenu-link">logout</a></li>
+                </ul>
+                {% else %}
+                <a href="{% url 'auth:login' %}" class="menu-link search"><img src="{% static 'img/login.svg' %}" alt="search"></a>
+                {% endif %}
+            </li>
+            {% if user.is_superuser %}
+                <li class="menu-list">
+                  <a href="{% url 'admin:users' %}" class="menu-link">admin tools</a>
+                </li>
+            {% endif %}
+            <li class="menu-list basket-link">
+                <a href="{% url 'basket:view' %}" class="menu-link search basket"><img src="{% static 'img/shop_cart.svg' %}" alt="search">
+                    <span class="basket-value">
+                        {% if basket %}
+                            {{ basket.0.total_cost }}$({{ basket.0.total_quantity }})
+                        {% endif %}
+                    </span>
+                </a>
+                {% if user.is_authenticated %}
+                <ul class="down-submenu">
+                    {% if basket %}
+                        {% for item in basket %}
+                            <div class="mini-basket">
+                                <ul class="mini-basket-list">
+                                    <li>
+                                        <a href="#"><img class="mini-basket-img" src="/media/{{ item.product.image }}" alt=""></a>
+                                        <span class="mini-basket-descr">
+                                            <h3>{{ item.product.name }}</h3>
+                                            <p>price-per-unit: {{ item.product.price }} $</p>
+<!--                                                    <input type="number" name="{{ item.pk }}" min="0" value="{{ item.quantity }}">-->
+                                            <p>count: {{ item.quantity }}</p>
+
+                                        </span>
+                                        <a class="delete-cart" href="{% url 'basket:remove' item.pk %}"><img src="{% static 'img/delete-cart.svg' %}" alt=""></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty-basket">
+                            <img src="{% static 'img/shopping-cart.svg' %}" alt="">
+                            <span>Your shopping cart<br> is empty.<br></span>
+                            <a href="{% url 'products:index' %}">Add product</a>
+                        </div>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+    <div class="submenu-header">
+    {% include 'mainapp/Include/inc_submenu.html' %}
+    </div>
+    {% for product in product_item %}
+    <div class="product-block clearfix">
+        <div class="product-image">
+            <img src="/media/{{ product.image }}" alt="">
+        </div>
+        <div class="description">
+            <h2>{{ product.name }}</h2>
+            <h5>hot deal</h5>
+            <h3>$<span style="font-size: 36px;"> {{ product.price }}</span>/sq<a href="{% url 'basket:view' %}" class="basket"><img src="{% static 'img/add_shop.svg' %}" alt="search"></a></h3>
+            <p>{{ product.description }}</p>
+
+        </div>
+    </div>
+    {% endfor %}
+    <div class="lower-tittle1 clearfix">
+        <h1>Related Products</h1>
+        <a href="">explore all<img src="{% static 'img/explore_all.svg' %}" alt=""></a>
+    </div>
+    <ul class="related-products">
+        <li><span class="descr">Fishnet Chair<a href="" class="btn-buy" target="_blank">order us</a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore doloremque, corporis obcaecati enim nihil quae itaque ipsa doloribus perspiciatis! Sapiente!</p></span><a href=""><img class="related-products1"src="{% static 'img/product-11.jpg' %}" alt=""></a></li>
+        <li><span class="descr">Fishnet Chair<a href="" class="btn-buy" target="_blank">order us</a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore doloremque, corporis obcaecati enim nihil quae itaque ipsa doloribus perspiciatis! Sapiente!</p></span><a href=""><img class="related-products2"src="{% static 'img/product-21.jpg' %}" alt=""></a></li>
+        <li><span class="descr">Fishnet Chair<a href="" class="btn-buy" target="_blank">order us</a><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore doloremque, corporis obcaecati enim nihil quae itaque ipsa doloribus perspiciatis! Sapiente!</p></span><a href=""><img class="related-products3"src="{% static 'img/product-31.jpg' %}" alt=""></a></li>
+    </ul>
+
+    {% endblock %}
+
+    {% block content %}
+
+    {% endblock %}
+
+
